@@ -51,6 +51,12 @@ cd Exploration-via-Reasoning-Estimator
 pip install -r requirements.txt
 ```
 
+TRL install
+
+```bash
+pip install trl
+```
+
 ## 📚Logical Element Extraction and Score Calculation
 
 To extract the logical element
