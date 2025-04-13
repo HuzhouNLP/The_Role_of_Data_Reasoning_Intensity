@@ -59,6 +59,15 @@ pip install trl
 
 ## 📚Logical Element Extraction and Score Calculation
 
+To process data
+```sh
+python ./score_calculate/data_process/1.logiQA.py
+python ./score_calculate/data_process/2.logiQA2.0(MCQA).py
+python ./score_calculate/data_process/3.reclor.py
+python ./score_calculate/data_process/4.logicBench(Aug).py
+python ./score_calculate/data_process/4.logicBench(Eval).py
+```
+
 To extract the logical element
 ```sh
 python ./score_calculate/context_extract.py
@@ -120,6 +129,22 @@ python ./Our_way/eval/TRL-submit_all.sh
 python ./Our_way/eval/TRL-sig-submit_all.sh
 ```
 
+After obtaining the results, in order to calculate the accuracy
+```sh
+python ./Our_way/eval/comprehensive_processing_accuracy_compute.py
+
+# You can also create it as an Excel spreadsheet
+python ./Our_way/eval/json_to_excel.py
+```
+
+To calculate the error rate
+```sh
+# If you only have one file
+python ./Our_way/eval/error_rate_calculation_one.py
+
+# If you have multiple files
+python ./Our_way/eval/error_rate_calculation_multi.py
+```
 
 ## 🚩Citation
 
