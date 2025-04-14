@@ -76,7 +76,7 @@ python ./score_calculate/options_extract.py
 
 To calculate the score
 ```sh
-python ./score_calculate/final_score_all_data_calculate_LayerNorm_Sigmoid
+python ./score_calculate/final_score_all_data_calculate_LayerNorm_Sigmoid.py
 python ./score_calculate/score_all.py
 python ./score_calculate/extraction_final_chart.py
 ```
@@ -123,10 +123,10 @@ python ./Our_way/eval/our_way.py
 python ./Our_way/eval/Balanced_test.py
 
 # If you have multiple original test set files that need to be evaluated
-python ./Our_way/eval/TRL-submit_all.sh
+bash ./Our_way/eval/TRL-submit_all.sh
 
 # If you have multiple balanced test set files that need to be evaluated
-python ./Our_way/eval/TRL-sig-submit_all.sh
+bash ./Our_way/eval/TRL-sig-submit_all.sh
 ```
 
 After obtaining the results, in order to calculate the accuracy
