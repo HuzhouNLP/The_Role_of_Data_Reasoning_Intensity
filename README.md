@@ -1,21 +1,9 @@
-<h1 align="center"> RE </h1>
-<h3 align="center"> Exploration via Reasoning Estimator </h3>
-
-<p align="center">
-  <a href="xxx">📄arXiv</a> •
-  <a href="xxx/">🌐Web</a> •
-    <a href="xxx">𝕏 Blog</a>
-    •
-    <a href="xxx">🤗 HF</a> •
-    <a href="xxx">🎧NotebookLM Audio</a>
-
+<h1 align="center"> DRI </h1>
+<h3 align="center"> Pushing LLMs to Their Reasoning Bound: The Role of Data Reasoning Intensity </h3>
 
   
 </p>
 
-[![Awesome](https://awesome.re/badge.svg)](https://github.com/HuzhouNLP/Exploration-via-Reasoning-Estimator) 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-![](https://img.shields.io/github/last-commit/HuzhouNLP/Exploration-via-Reasoning-Estimator?color=green) 
 
 ## Table of Contents
 
@@ -46,8 +34,7 @@ Recent advances in large language models (LLMs) highlight the importance of trai
 ## 🔧Installation
 
 ```bash
-git https://github.com/HuzhouNLP/Exploration-via-Reasoning-Estimator
-cd Exploration-via-Reasoning-Estimator
+cd The_Role_of_Data_Reasoning_Intensity
 pip install -r requirements.txt
 ```
 
@@ -145,7 +132,6 @@ python ./Our_way/eval/error_rate_calculation_multi.py
 
 ## 🚩Citation
 
-Please cite our repository if you use WKM in your work. Thanks!
 
 ```bibtex
 
@@ -157,4 +143,3 @@ Please cite our repository if you use WKM in your work. Thanks!
 
 
 
-We will offer long-term maintenance to fix bugs and solve issues. So if you have any problems, please put issues to us.
