@@ -22,7 +22,7 @@ def generate_paths(data_name, suffix=""):
     output_dir = os.path.join(data_dir, "results")  # 输出目录
     logging_dir = os.path.join(data_dir, "logs")  # 日志目录
     model_dir = os.path.join(data_dir, "models")  # 模型保存目录
-    dataset_path = f"/public/home/huzhenlin2023/synthetic_data/fine_tuning_test/TRL-test/trl-main/our_data/clean_data/{data_name}.json"  # 数据集路径
+    dataset_path = f"./{data_name}.json"  # 数据集路径
 
     # 创建目录（如果不存在）
     os.makedirs(output_dir, exist_ok=True)
@@ -53,7 +53,7 @@ dataset_mode = 0
 
 # ================== 需要修改的路径配置 ==================
 # 模型ID
-model_id = "/public/home/huzhenlin2023/synthetic_data/fine_tuning_test/llama3-8b-instruction-hf"
+model_id = "./llama3-8b-instruction-hf"
 max_seq_length = 2048
 # ======================================================
 
