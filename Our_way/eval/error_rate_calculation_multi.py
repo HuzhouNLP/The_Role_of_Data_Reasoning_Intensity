@@ -3,74 +3,74 @@ import os
 import json
 import pandas as pd
 import matplotlib.pyplot as plt
-from matplotlib import font_manager  # ĞÂÔöµ¼Èë
+from matplotlib import font_manager  # æ–°å¢å¯¼å…¥
 import seaborn as sns
 # ================================
-# È«¾ÖÅäÖÃÇøÓò£ºÖ»ĞèĞŞ¸ÄÕâÀïµÄ²ÎÊı
+# å…¨å±€é…ç½®åŒºåŸŸï¼šåªéœ€ä¿®æ”¹è¿™é‡Œçš„å‚æ•°
 # ================================
 config = {
-    # »ù´¡Â·¾¶ÅäÖÃ£¨½öÓÃÓÚµÚÒ»²½Êı¾İºÏ²¢£©
-#    "base_path": r"F:\ºÏ³ÉÊı¾İÊı¾İ¼¯\pythonProject\all_data_experiment_36788\experiment_processing\test_results_correct_TRL\epoch16",
-    "base_path": r"F:\ºÏ³ÉÊı¾İÊı¾İ¼¯\pythonProject\all_data_experiment_36788\experiment_processing\filter_data_epoch16_4.3",
-    # Êı¾İºÏ²¢ÅäÖÃ
+    # åŸºç¡€è·¯å¾„é…ç½®ï¼ˆä»…ç”¨äºç¬¬ä¸€æ­¥æ•°æ®åˆå¹¶ï¼‰
+#    "base_path": r".\all_data_experiment_36788\experiment_processing\test_results_correct_TRL\epoch16",
+    "base_path": r".\all_data_experiment_36788\experiment_processing\filter_data_epoch16_4.3",
+    # æ•°æ®åˆå¹¶é…ç½®
     "sub_folders": ["LogicBench", "LogiQA2.0", "LogiQA", "Reclor"],
     "common_folder_name": "filtered_no_repeat_output_36788_0.50_1.00_epoch16_no_eval_original_way_",
     "jsonl_file_name": "generated_predictions.jsonl",
 
-    # ·ÖÊıÔ´ÎÄ¼ş£¨Ğè·ÅÔÚµ±Ç°Ä¿Â¼£©
-    "source_score_file": "all_test_data£¨È«²âÊÔ¼¯·ÖÊı£©.json",
+    # åˆ†æ•°æºæ–‡ä»¶ï¼ˆéœ€æ”¾åœ¨å½“å‰ç›®å½•ï¼‰
+    "source_score_file": "all_test_dataï¼ˆå…¨æµ‹è¯•é›†åˆ†æ•°ï¼‰.json",
 
-    # ·ÖÎöÅäÖÃ
-    "log_bin_size": 1,        # ComplexityScore_logÇø¼ä´óĞ¡
-    "norm_bin_size": 0.05,     # ComplexityScore_normÇø¼ä´óĞ¡
-    "log_min": 0,             # log·ÖÊı×îĞ¡Öµ
-    "log_max": 10             # log·ÖÊı×î´óÖµ
+    # åˆ†æé…ç½®
+    "log_bin_size": 1,        # ComplexityScore_logåŒºé—´å¤§å°
+    "norm_bin_size": 0.05,     # ComplexityScore_normåŒºé—´å¤§å°
+    "log_min": 0,             # logåˆ†æ•°æœ€å°å€¼
+    "log_max": 10             # logåˆ†æ•°æœ€å¤§å€¼
 }
 # ================================
-# ÅäÖÃÇøÓò½áÊø
+# é…ç½®åŒºåŸŸç»“æŸ
 # ================================
 
 class DataProcessor:
     def __init__(self, config):
         self.config = config
 
-        # ½â¾öÖĞÎÄ×ÖÌåÎÊÌâ£¨´øµ÷ÊÔ£©
+        # è§£å†³ä¸­æ–‡å­—ä½“é—®é¢˜ï¼ˆå¸¦è°ƒè¯•ï¼‰
         self._set_chinese_font()
 
-        # ´´½¨½á¹ûÎÄ¼ş¼Ğ£¨´øµ÷ÊÔ£©
+        # åˆ›å»ºç»“æœæ–‡ä»¶å¤¹ï¼ˆå¸¦è°ƒè¯•ï¼‰
         self.result_folder = os.path.join(os.getcwd(), config["common_folder_name"])
-        print(f"\n´´½¨½á¹ûÄ¿Â¼: {self.result_folder}")
+        print(f"\nåˆ›å»ºç»“æœç›®å½•: {self.result_folder}")
         os.makedirs(self.result_folder, exist_ok=True)
-        print(f"Ä¿Â¼´æÔÚ: {os.path.exists(self.result_folder)}")
+        print(f"ç›®å½•å­˜åœ¨: {os.path.exists(self.result_folder)}")
 
-        # ¶¨ÒåÎÄ¼şÂ·¾¶
+        # å®šä¹‰æ–‡ä»¶è·¯å¾„
         self.merged_file = os.path.join(self.result_folder, "merged_predictions.json")
-        self.scored_file = os.path.join(self.result_folder, "scores£¨È«²âÊÔ¼¯·ÖÊı£©.json")
+        self.scored_file = os.path.join(self.result_folder, "scoresï¼ˆå…¨æµ‹è¯•é›†åˆ†æ•°ï¼‰.json")
 
 
     def _set_chinese_font(self):
-        """ÉèÖÃÖĞÎÄ×ÖÌå£¨´ø´íÎó´¦Àí£©"""
+        """è®¾ç½®ä¸­æ–‡å­—ä½“ï¼ˆå¸¦é”™è¯¯å¤„ç†ï¼‰"""
         try:
             font_path = "C:/Windows/Fonts/simhei.ttf"
-            print(f"\n³¢ÊÔ¼ÓÔØ×ÖÌå: {font_path}")
-            print(f"×ÖÌåÎÄ¼ş´æÔÚ: {os.path.exists(font_path)}")
+            print(f"\nå°è¯•åŠ è½½å­—ä½“: {font_path}")
+            print(f"å­—ä½“æ–‡ä»¶å­˜åœ¨: {os.path.exists(font_path)}")
 
             font_prop = font_manager.FontProperties(fname=font_path)
             plt.rcParams['font.family'] = font_prop.get_name()
             plt.rcParams['axes.unicode_minus'] = False
-            print("×ÖÌåÉèÖÃ³É¹¦")
+            print("å­—ä½“è®¾ç½®æˆåŠŸ")
         except Exception as e:
-            print(f"×ÖÌåÉèÖÃÊ§°Ü: {str(e)}")
+            print(f"å­—ä½“è®¾ç½®å¤±è´¥: {str(e)}")
             raise
 
     def merge_predictions(self):
-        """²½Öè1£ººÏ²¢Ô¤²âÎÄ¼ş"""
+        """æ­¥éª¤1ï¼šåˆå¹¶é¢„æµ‹æ–‡ä»¶"""
         print("\n" + "="*40)
-        print("ÕıÔÚºÏ²¢Ô¤²âÎÄ¼ş...")
+        print("æ­£åœ¨åˆå¹¶é¢„æµ‹æ–‡ä»¶...")
 
         merged_data = []
         for sub_folder in self.config["sub_folders"]:
-            # ¹¹½¨Ô­Ê¼Êı¾İÂ·¾¶£¨Ê¹ÓÃbase_path£©
+            # æ„å»ºåŸå§‹æ•°æ®è·¯å¾„ï¼ˆä½¿ç”¨base_pathï¼‰
             jsonl_path = os.path.join(
                 self.config["base_path"],
                 sub_folder,
@@ -82,68 +82,68 @@ class DataProcessor:
                 with open(jsonl_path, 'r', encoding='utf-8') as f:
                     for line in f:
                         merged_data.append(json.loads(line))
-                print(f"ÒÑ¼ÓÔØ {sub_folder} µÄÊı¾İ")
+                print(f"å·²åŠ è½½ {sub_folder} çš„æ•°æ®")
             except Exception as e:
-                print(f"¼ÓÔØ {sub_folder} Ê§°Ü: {str(e)}")
+                print(f"åŠ è½½ {sub_folder} å¤±è´¥: {str(e)}")
                 continue
 
-        # ±£´æµ½µ±Ç°Ä¿Â¼µÄ½á¹ûÎÄ¼ş¼Ğ
+        # ä¿å­˜åˆ°å½“å‰ç›®å½•çš„ç»“æœæ–‡ä»¶å¤¹
         with open(self.merged_file, 'w', encoding='utf-8') as f:
             json.dump(merged_data, f, ensure_ascii=False, indent=4)
-        print(f"ºÏ²¢Íê³É£¬ÎÄ¼şÒÑ±£´æÖÁ: {self.merged_file}")
+        print(f"åˆå¹¶å®Œæˆï¼Œæ–‡ä»¶å·²ä¿å­˜è‡³: {self.merged_file}")
 
     def add_scores(self):
-        """²½Öè2£ºÌí¼Ó¸´ÔÓ¶È·ÖÊı"""
+        """æ­¥éª¤2ï¼šæ·»åŠ å¤æ‚åº¦åˆ†æ•°"""
         print("\n" + "="*40)
-        print("ÕıÔÚÌí¼Ó¸´ÔÓ¶È·ÖÊı...")
+        print("æ­£åœ¨æ·»åŠ å¤æ‚åº¦åˆ†æ•°...")
 
         try:
-            # ¼ÓÔØÔ´Êı¾İ£¨µ±Ç°Ä¿Â¼ÏÂµÄÎÄ¼ş£©
+            # åŠ è½½æºæ•°æ®ï¼ˆå½“å‰ç›®å½•ä¸‹çš„æ–‡ä»¶ï¼‰
             with open(self.config["source_score_file"], 'r', encoding='utf-8') as f:
                 source_data = json.load(f)
 
-            # ¼ÓÔØÄ¿±êÊı¾İ£¨½á¹ûÎÄ¼ş¼ĞÖĞµÄÎÄ¼ş£©
+            # åŠ è½½ç›®æ ‡æ•°æ®ï¼ˆç»“æœæ–‡ä»¶å¤¹ä¸­çš„æ–‡ä»¶ï¼‰
             with open(self.merged_file, 'r', encoding='utf-8') as f:
                 target_data = json.load(f)
 
-            # Êı¾İĞ£Ñé
+            # æ•°æ®æ ¡éªŒ
             if len(source_data) != len(target_data):
-                raise ValueError("Ô´ÎÄ¼şºÍÄ¿±êÎÄ¼şÊı¾İÌõÄ¿²»Ò»ÖÂ")
+                raise ValueError("æºæ–‡ä»¶å’Œç›®æ ‡æ–‡ä»¶æ•°æ®æ¡ç›®ä¸ä¸€è‡´")
 
-            # ºÏ²¢Êı¾İ
+            # åˆå¹¶æ•°æ®
             for src, tgt in zip(source_data, target_data):
                 tgt["ComplexityScore_log"] = src.get("ComplexityScore_log")
                 tgt["ComplexityScore_norm"] = src.get("ComplexityScore_norm")
 
-            # ±£´æµ½½á¹ûÎÄ¼ş¼Ğ
+            # ä¿å­˜åˆ°ç»“æœæ–‡ä»¶å¤¹
             with open(self.scored_file, 'w', encoding='utf-8') as f:
                 json.dump(target_data, f, ensure_ascii=False, indent=4)
-            print(f"·ÖÊıÌí¼ÓÍê³É£¬ÎÄ¼şÒÑ±£´æÖÁ: {self.scored_file}")
+            print(f"åˆ†æ•°æ·»åŠ å®Œæˆï¼Œæ–‡ä»¶å·²ä¿å­˜è‡³: {self.scored_file}")
 
         except Exception as e:
-            print(f"Ìí¼Ó·ÖÊıÊ±³ö´í: {str(e)}")
+            print(f"æ·»åŠ åˆ†æ•°æ—¶å‡ºé”™: {str(e)}")
             raise
 
     def analyze_data(self):
-        """²½Öè3£ºÊı¾İ·ÖÎöÓë¿ÉÊÓ»¯£¨´øµ÷ÊÔ£©"""
+        """æ­¥éª¤3ï¼šæ•°æ®åˆ†æä¸å¯è§†åŒ–ï¼ˆå¸¦è°ƒè¯•ï¼‰"""
         print("\n" + "="*40)
-        print("ÕıÔÚ½øĞĞÊı¾İ·ÖÎö...")
+        print("æ­£åœ¨è¿›è¡Œæ•°æ®åˆ†æ...")
 
         try:
-            # ¼ÓÔØÊı¾İ£¨´øÑéÖ¤£©
-            print(f"\n¼ÓÔØÊı¾İÎÄ¼ş: {self.scored_file}")
-            print(f"ÎÄ¼ş´æÔÚ: {os.path.exists(self.scored_file)}")
+            # åŠ è½½æ•°æ®ï¼ˆå¸¦éªŒè¯ï¼‰
+            print(f"\nåŠ è½½æ•°æ®æ–‡ä»¶: {self.scored_file}")
+            print(f"æ–‡ä»¶å­˜åœ¨: {os.path.exists(self.scored_file)}")
             with open(self.scored_file, 'r', encoding='utf-8') as f:
                 data = json.load(f)
             df = pd.DataFrame(data)
-            print(f"\nÊı¾İÑù±¾:\n{df.head()}")
-            print(f"\nÊı¾İÁĞÃû: {df.columns.tolist()}")
+            print(f"\næ•°æ®æ ·æœ¬:\n{df.head()}")
+            print(f"\næ•°æ®åˆ—å: {df.columns.tolist()}")
 
-            # ±ê¼Ç´íÎó
+            # æ ‡è®°é”™è¯¯
             df['error'] = df['label'] != df['predict']
-            print(f"\n´íÎóÊıÁ¿Í³¼Æ:\n{df['error'].value_counts()}")
+            print(f"\né”™è¯¯æ•°é‡ç»Ÿè®¡:\n{df['error'].value_counts()}")
 
-            # ´¦Àílog·ÖÊı
+            # å¤„ç†logåˆ†æ•°
             self._process_score(df, 'log',
                            bins=list(range(
                                self.config["log_min"],
@@ -151,7 +151,7 @@ class DataProcessor:
                                self.config["log_bin_size"]
                            )))
 
-            # ´¦Àínorm·ÖÊı
+            # å¤„ç†normåˆ†æ•°
             self._process_score(df, 'norm',
                            bins=[
                                x * self.config["norm_bin_size"]
@@ -160,34 +160,34 @@ class DataProcessor:
 
 
         except Exception as e:
-            print(f"Êı¾İ·ÖÎöÊ±³ö´í: {str(e)}")
+            print(f"æ•°æ®åˆ†ææ—¶å‡ºé”™: {str(e)}")
             raise
 
     def _process_score(self, df, score_type, bins):
-        """´¦Àíµ¥¸ö·ÖÊıÀàĞÍµÄ·ÖÎö£¨´øµ÷ÊÔ£©"""
-        print(f"\n{'='*20} ´¦Àí {score_type} ·ÖÊı {'='*20}")
+        """å¤„ç†å•ä¸ªåˆ†æ•°ç±»å‹çš„åˆ†æï¼ˆå¸¦è°ƒè¯•ï¼‰"""
+        print(f"\n{'='*20} å¤„ç† {score_type} åˆ†æ•° {'='*20}")
         try:
             col_name = f"ComplexityScore_{score_type}"
-            print(f"·ÖÎöÁĞ: {col_name}")
+            print(f"åˆ†æåˆ—: {col_name}")
 
-            # ÑéÖ¤ÁĞ´æÔÚ
+            # éªŒè¯åˆ—å­˜åœ¨
             if col_name not in df.columns:
-                raise ValueError(f"ÁĞ {col_name} ²»´æÔÚ£¡¿ÉÓÃÁĞ: {df.columns.tolist()}")
+                raise ValueError(f"åˆ— {col_name} ä¸å­˜åœ¨ï¼å¯ç”¨åˆ—: {df.columns.tolist()}")
 
-            # Éú³ÉÇø¼ä±êÇ©
+            # ç”ŸæˆåŒºé—´æ ‡ç­¾
             labels = []
             for i in range(len(bins)-1):
                 if score_type == 'log':
                     labels.append(f"{bins[i]}-{bins[i+1]}")
                 else:
                     labels.append(f"{bins[i]:.2f}-{bins[i+1]:.2f}")
-            print(f"Éú³É·ÖÏä±êÇ©: {labels}")
+            print(f"ç”Ÿæˆåˆ†ç®±æ ‡ç­¾: {labels}")
 
-            # Êı¾İ·ÖÏä
+            # æ•°æ®åˆ†ç®±
             df['bin'] = pd.cut(df[col_name], bins=bins, labels=labels, include_lowest=True)
-            print(f"\n·ÖÏä½á¹ûÍ³¼Æ:\n{df['bin'].value_counts().sort_index()}")
+            print(f"\nåˆ†ç®±ç»“æœç»Ÿè®¡:\n{df['bin'].value_counts().sort_index()}")
 
-            # Í³¼ÆĞÅÏ¢
+            # ç»Ÿè®¡ä¿¡æ¯
             stats = df.groupby('bin', observed=False).agg(
                 total=('error', 'size'),
                 errors=('error', 'sum')
@@ -195,59 +195,59 @@ class DataProcessor:
             stats['correct'] = stats['total'] - stats['errors']
             stats['error_rate'] = stats['errors'] / stats['total'].replace(0, 1)
 
-            print(f"\nÍ³¼ÆĞÅÏ¢Ô¤ÀÀ:\n{stats}")
+            print(f"\nç»Ÿè®¡ä¿¡æ¯é¢„è§ˆ:\n{stats}")
 
-            # Éú³ÉÍ³¼ÆÎÄ¼ş
+            # ç”Ÿæˆç»Ÿè®¡æ–‡ä»¶
             self._save_stats_files(stats, col_name, labels)
 
-            # »æÖÆÕÛÏßÍ¼
+            # ç»˜åˆ¶æŠ˜çº¿å›¾
             self._plot_error_rate(stats, col_name, labels)
 
         except Exception as e:
-            print(f"´¦Àí {score_type} ·ÖÊıÊ±³ö´í: {str(e)}")
+            print(f"å¤„ç† {score_type} åˆ†æ•°æ—¶å‡ºé”™: {str(e)}")
             raise
 
     def _save_stats_files(self, stats, col_name, labels):
-        """±£´æÍ³¼ÆÎÄ¼ş£¨´øµ÷ÊÔ£©"""
-        print(f"\n{'='*20} ±£´æ {col_name} Í³¼ÆÎÄ¼ş {'='*20}")
+        """ä¿å­˜ç»Ÿè®¡æ–‡ä»¶ï¼ˆå¸¦è°ƒè¯•ï¼‰"""
+        print(f"\n{'='*20} ä¿å­˜ {col_name} ç»Ÿè®¡æ–‡ä»¶ {'='*20}")
         try:
-            # Çø¼äÍ³¼ÆÎÄ¼ş£¨Ö±½Ó±£´æµ½½á¹ûÄ¿Â¼£©
+            # åŒºé—´ç»Ÿè®¡æ–‡ä»¶ï¼ˆç›´æ¥ä¿å­˜åˆ°ç»“æœç›®å½•ï¼‰
             stats_file = os.path.join(self.result_folder, f"{col_name}_stats.txt")
-            print(f"Ğ´ÈëÍ³¼ÆÎÄ¼ş: {stats_file}")
+            print(f"å†™å…¥ç»Ÿè®¡æ–‡ä»¶: {stats_file}")
             with open(stats_file, 'w', encoding='utf-8') as f:
                 for label in labels:
                     total = stats.loc[label, 'total']
                     correct = stats.loc[label, 'correct']
                     errors = stats.loc[label, 'errors']
-                    f.write(f"Çø¼ä {label}: ×ÜÊı = {total}, ÕıÈ·Êı = {correct}, ´íÎóÊı = {errors}\n")
+                    f.write(f"åŒºé—´ {label}: æ€»æ•° = {total}, æ­£ç¡®æ•° = {correct}, é”™è¯¯æ•° = {errors}\n")
 
-            print(f"Í³¼ÆÎÄ¼şÒÑÉú³É: {os.path.exists(stats_file)}")
+            print(f"ç»Ÿè®¡æ–‡ä»¶å·²ç”Ÿæˆ: {os.path.exists(stats_file)}")
 
-            # ´íÎóÂÊÎÄ¼ş
+            # é”™è¯¯ç‡æ–‡ä»¶
             rate_file = os.path.join(self.result_folder, f"{col_name}_error_rate.txt")
-            print(f"Ğ´Èë´íÎóÂÊÎÄ¼ş: {rate_file}")
+            print(f"å†™å…¥é”™è¯¯ç‡æ–‡ä»¶: {rate_file}")
 
             with open(rate_file, 'w', encoding='utf-8') as f:
                 for label in labels:
                     rate = stats.loc[label, 'error_rate']
-                    f.write(f"Çø¼ä {label}: ´íÎóÂÊ = {rate:.2%}\n")
+                    f.write(f"åŒºé—´ {label}: é”™è¯¯ç‡ = {rate:.2%}\n")
 
-            print(f"´íÎóÂÊÎÄ¼şÒÑÉú³É: {os.path.exists(rate_file)}")
+            print(f"é”™è¯¯ç‡æ–‡ä»¶å·²ç”Ÿæˆ: {os.path.exists(rate_file)}")
 
         except Exception as e:
-            print(f"±£´æÎÄ¼şÊ§°Ü: {str(e)}")
+            print(f"ä¿å­˜æ–‡ä»¶å¤±è´¥: {str(e)}")
             raise
 
     def _plot_error_rate(self, stats, col_name, labels):
-        """»æÖÆ´íÎóÂÊÕÛÏßÍ¼£¨´øµ÷ÊÔ£©"""
-        print(f"\n{'='*20} »æÖÆ {col_name} Í¼±í {'='*20}")
+        """ç»˜åˆ¶é”™è¯¯ç‡æŠ˜çº¿å›¾ï¼ˆå¸¦è°ƒè¯•ï¼‰"""
+        print(f"\n{'='*20} ç»˜åˆ¶ {col_name} å›¾è¡¨ {'='*20}")
         try:
             plt.figure(figsize=(12, 7))
             plt.plot(labels, stats['error_rate'], marker='o', linestyle='-', color='blue')
 
-            plt.title(f"{col_name} ´íÎóÂÊÇ÷ÊÆ", fontsize=14)
-            plt.xlabel('·ÖÊıÇø¼ä', fontsize=12)
-            plt.ylabel('´íÎóÂÊ', fontsize=12)
+            plt.title(f"{col_name} é”™è¯¯ç‡è¶‹åŠ¿", fontsize=14)
+            plt.xlabel('åˆ†æ•°åŒºé—´', fontsize=12)
+            plt.ylabel('é”™è¯¯ç‡', fontsize=12)
             plt.xticks(rotation=45, ha='right')
             plt.ylim(0, 1)
             plt.grid(True, alpha=0.3)
@@ -257,11 +257,11 @@ class DataProcessor:
             plt.savefig(plot_path, dpi=300)
             plt.close()
 
-            print(f"Í¼±íÒÑ±£´æµ½: {plot_path}")
-            print(f"Í¼Æ¬´æÔÚ: {os.path.exists(plot_path)}")
+            print(f"å›¾è¡¨å·²ä¿å­˜åˆ°: {plot_path}")
+            print(f"å›¾ç‰‡å­˜åœ¨: {os.path.exists(plot_path)}")
 
         except Exception as e:
-            print(f"»æÍ¼Ê§°Ü: {str(e)}")
+            print(f"ç»˜å›¾å¤±è´¥: {str(e)}")
             raise
 
 if __name__ == "__main__":
@@ -272,7 +272,7 @@ if __name__ == "__main__":
         processor.add_scores()
         processor.analyze_data()
     except Exception as e:
-        print(f"\n´¦Àí¹ı³ÌÖĞ·¢Éú´íÎó: {str(e)}")
+        print(f"\nå¤„ç†è¿‡ç¨‹ä¸­å‘ç”Ÿé”™è¯¯: {str(e)}")
     finally:
-        print("\n´¦ÀíÁ÷³Ì½áÊø")
-        print(f"×îÖÕ½á¹û±£´æÔÚ: {processor.result_folder}")
+        print("\nå¤„ç†æµç¨‹ç»“æŸ")
+        print(f"æœ€ç»ˆç»“æœä¿å­˜åœ¨: {processor.result_folder}")
