@@ -17,7 +17,7 @@ bnb_config = BitsAndBytesConfig(
 model = AutoModelForCausalLM.from_pretrained(peft_model_id, device_map="cuda", quantization_config=bnb_config)
 
 # 加载 Llama 3 的 tokenizer
-model_id = "/public/home/huzhenlin2023/synthetic_data/fine_tuning_test/llama3-8b-instruction-hf"  # 这里使用你训练时的模型路径
+model_id = "./llama3-8b-instruction-hf"  # 这里使用你训练时的模型路径
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 tokenizer.padding_side = 'right'
 tokenizer.pad_token = tokenizer.eos_token
