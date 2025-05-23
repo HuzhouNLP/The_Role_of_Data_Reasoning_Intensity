@@ -10,7 +10,7 @@
 - 🌻[Acknowledgement](#acknowledgement)
 - 🌟[Overview](#overview)
 - 🔧[Installation](#installation)
-- 📚[Logical Element Extraction and Score Calculation](#logical-element-extraction-and-Score-Calculation)
+- 📚[Data Reasoning Intensity Score Calculation](#Data-Reasoning-Intensity-Score-Calculation)
 - 📉[Model Training](#model-training)
 - 🧐[Evaluation](#evaluation)
 - 🚩[Citation](#citation)
@@ -23,11 +23,11 @@
 
 Our code for the training module and the inference module is implemented based on [TRL](https://github.com/huggingface/trl). The training and test datasets are sourced from [Reclor](https://github.com/yuweihao/reclor), [LogiQA](https://github.com/lgw863/LogiQA-dataset), [LogiQA2.0](https://github.com/csitfun/LogiQA2.0), and [LogicBench](https://github.com/Mihir3009/LogicBench). Thanks for their great contributions! 
 
-
 ## 🌟Overview
 
 Recent advances in large language models (LLMs) highlight the importance of training data structure and quality in shaping reasoning behavior. However, most existing approaches focus on transforming data formats while neglecting the internal reasoning complexity of training samples, leaving the reasoning potential of data underexplored and underutilized. In this work, we posit that LLM reasoning performance is bounded by both the reasoning potential of data and the cognitive capacity of the model. Inspired by the Information Bottleneck principle, we propose data reasoning intensity, a novel metric that quantifies the latent reasoning complexity of samples by decomposing and aggregating their logical structures. This allows us to analyze how well current models utilize reasoning signals and identify performance gaps relative to data potential. Based on this insight, we introduce a Re-Cognizing optimization strategy that systematically enhances the reasoning intensity of training data. Rather than increasing data volume, our method re-optimizes existing samples to better align with the model’s reasoning frontier. Experiments on multiple logical reasoning benchmarks show that our approach significantly improves performance and generalization over data-centric strategies. We further validate our method under a reinforcement learning framework. Our findings suggest that optimizing data for reasoning complexity—rather than scale or surface structure—is key to unlocking the full cognitive potential of LLMs.
 
+![alt text](Figure0.png)
 
 ## 🔧Installation
 
@@ -42,7 +42,7 @@ TRL install
 pip install trl
 ```
 
-## 📚Logical Element Extraction and Score Calculation
+## 📚Data Reasoning Intensity Score Calculation
 
 To process data
 ```sh
