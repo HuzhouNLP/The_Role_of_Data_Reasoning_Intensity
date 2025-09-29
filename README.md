@@ -133,7 +133,3 @@ python ./Our_way/eval/error_rate_calculation_multi.py
 
 
 
-## 🎉Contributors
-
-
-
