@@ -25,9 +25,10 @@ Our code for the training module and the inference module is implemented based o
 
 ## 🌟Overview
 
-Recent advances in large language models (LLMs) highlight the importance of training data structure and quality in shaping reasoning behavior. However, most existing approaches focus on transforming data formats while neglecting the internal reasoning complexity of training samples, leaving the reasoning potential of data underexplored and underutilized. In this work, we posit that LLM reasoning performance is bounded by both the reasoning potential of data and the cognitive capacity of the model. Inspired by the Information Bottleneck principle, we propose data reasoning intensity, a novel metric that quantifies the latent reasoning complexity of samples by decomposing and aggregating their logical structures.  This allows us to analyze how well current LLMs utilize reasoning signals and identify performance gaps relative to data potential. Based on this insight, we introduce a re-cognizing optimization strategy that systematically enhances the reasoning intensity of training data. Rather than increasing data volume, our method re-optimizes existing samples to better align with the LLM’s reasoning bounder. Extensive experiments show that our approach significantly improves performance and generalization over data-centric strategies. We further validate our method under a reinforcement learning framework. Our results indicate that prioritizing reasoning complexity in data rather than sheer scale or superficial form is essential to realizing LLMs' full cognitive potential.
+Recent advances in large language models (LLMs) highlight the importance of training data structure and quality in shaping reasoning behavior. However, most existing approaches focus on transforming data formats while neglecting the internal reasoning complexity of training samples, leaving the reasoning potential of data underexplored and underutilized. In this work, we posit that LLM logical reasoning performance is jointly constrained by the potential of the training data and the cognitive capacity of the model. To make this relationship measurable, we
+introduce Data Reasoning Intensity (DRI), a novel metric that quantifies the latent logical reasoning complexity of samples by decomposing and aggregating their logical structures. This allows us to analyze how well current LLMs utilize logical reasoning signals and identify performance gaps relative to data potential. Based on this insight, we introduce a re-cognizing optimization strategy that systematically enhances the logical reasoning intensity of training data. Rather than increasing data volume, our method re-optimizes existing samples to better align with the LLM's logical reasoning boundary. Extensive experiments show that our approach significantly improves performance and generalization over data-centric strategies.
+We further validate our method under a reinforcement learning framework. Our results indicate that prioritizing reasoning complexity in data rather than sheer scale or superficial form is essential to realizing LLMs’ full cognitive potential.
 
-![alt text](Figure0.png)
 
 ## 🔧Installation
 
@@ -128,12 +129,7 @@ python ./Our_way/eval/error_rate_calculation_one.py
 python ./Our_way/eval/error_rate_calculation_multi.py
 ```
 
-## 🚩Citation
 
-
-```bibtex
-
-```
 
 
 
