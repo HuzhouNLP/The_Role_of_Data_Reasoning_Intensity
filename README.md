@@ -1,5 +1,5 @@
 <h1 align="center"> DRI </h1>
-<h3 align="center"> Pushing LLMs to Their Reasoning Bound: The Role of Data Reasoning Intensity </h3>
+<h3 align="center"> Pushing LLMs to Their Logical Reasoning Bound: The Role of Data Reasoning Intensity </h3>
 
   
 </p>
